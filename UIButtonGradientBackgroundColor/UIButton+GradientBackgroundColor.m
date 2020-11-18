@@ -30,6 +30,14 @@
     CALayer *layer = [self jh_gradientLayer:self.bounds color:colors location:@[@(0.3)] direction:CAGradientLayerDirection_FromLeftToRight];
     NSLog(@"%@:\n%@",self.titleLabel.text,self.layer.sublayers);
     
+#if 1
+    if (self.currentTitle) {
+        [self.layer insertSublayer:layer below:self.titleLabel.layer];
+    }
+    if (self.currentImage) {
+        [self.layer insertSublayer:layer below:self.imageView.layer];
+    }
+#else    
     CALayer *labelLayer = nil;
     for (CALayer *l in self.layer.sublayers) {
         NSString *s = NSStringFromClass([l class]);
@@ -41,6 +49,7 @@
 
     // 避免渐变色 覆盖 标题
     [self.layer insertSublayer:layer below:labelLayer];
+#endif    
 }
 
 @end
